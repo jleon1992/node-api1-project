@@ -41,16 +41,17 @@ server.delete('/api/users/:id', (req, res) => {
 server.put('/api/users/:id', (req, res) => {
     
     const changes = req.body
-    const id = req.params.id
-    let found = users.find(h => h.id === id)
+    const id = Number(req.params.id)
+
+    let found = users.find(u => u.id === id)
+
     if(found){
         Object.assign(found, changes)
+
         res.status(200).json(found)
     } else {
         res.status(404).json({ message: 'not found'})
     }
-    users = users.filter(hub => hub.id !== id)
-    res.status(200).json(users)
 })
 
 const port = 8888
